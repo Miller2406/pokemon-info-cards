@@ -1,9 +1,18 @@
-import React from 'react'
+import { useEffect } from "react";
+
+import { pokemonLisService, pokemonDetailService } from "@/service";
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
-}
+  const callData = async () => {
+    const data = await pokemonDetailService.getPokemonDetail("ditto");
+    console.log("data ", data.data);
+  };
 
-export default HomePage
+  useEffect(() => {
+    callData();
+  }, []);
+
+  return <div>HomePage</div>;
+};
+
+export default HomePage;
