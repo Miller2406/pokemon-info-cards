@@ -1,11 +1,20 @@
-import "@/App.scss";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "@/pages/home";
+import DetailPage from "@/pages/detail";
 
 function App() {
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+    },
+    {
+      path: "/detail",
+      element: <DetailPage />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
