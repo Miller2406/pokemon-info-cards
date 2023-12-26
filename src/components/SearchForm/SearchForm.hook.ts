@@ -34,6 +34,7 @@ const useSearchForm = () => {
         });
       }
       setFetchPokemonList({ data: pokeList, loading: false, error: null });
+      setPokemonList({ data: pokeList, loading: false, error: null });
     } else {
       setFetchPokemonList({
         data: [],
