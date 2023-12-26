@@ -19,7 +19,7 @@ const useSearchForm = () => {
     const pokeList = [];
 
     if (responseList.status === 200) {
-      const responseResults = responseList?.data?.results || [];
+      const responseResults = responseList.data?.results || [];
       setFetchPokemonList({ data: [], loading: true, error: null });
       for (const pokemon of responseResults) {
         const response = await pokemonDetailServices.getPokemonDetail(
@@ -49,7 +49,7 @@ const useSearchForm = () => {
 
   useEffect(() => {
     const data = fetchPokemon.data.filter((item) =>
-      item.name.toLowerCase().includes(keyword.toLowerCase())
+      item.name.toLowerCase().includes(keyword?.toLowerCase())
     );
     setPokemonList({
       data: data,
