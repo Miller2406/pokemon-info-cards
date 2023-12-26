@@ -7,7 +7,7 @@ interface IGetPokemonDetailResponse {
   data: IPokemonDetailRespose;
 }
 
-export const pokemonDetailService = {
+export const pokemonDetailServices = {
   getPokemonDetail: async (
     name: string
   ): Promise<IGetPokemonDetailResponse> => {

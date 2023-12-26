@@ -1,4 +1,4 @@
-import { pokemonListService } from "@/service/pokemonList";
-import { pokemonDetailService } from "@/service/pokemonDetail";
+import { pokemonListServices } from "@/service/pokemonList";
+import { pokemonDetailServices } from "@/service/pokemonDetail";
 
-export { pokemonListService, pokemonDetailService };
+export { pokemonListServices, pokemonDetailServices };
