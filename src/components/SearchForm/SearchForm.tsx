@@ -2,9 +2,10 @@ import { generationList, typesList, sortList } from "@/utils/optionList";
 import { useSearchForm } from "@/components/SearchForm";
 
 const SearchForm = () => {
-  const { fieldKeyword } = useSearchForm();
+  const { fieldKeyword, fieldGeneration, fieldTypes, fieldSort } =
+    useSearchForm();
   return (
-    <form className="grid grid-cols-4 gap-x-[20px]">
+    <form className="grid grid-cols-1 sm:grid-cols-4 gap-x-[20px]">
       <div>
         <label
           htmlFor="generation"
@@ -13,6 +14,7 @@ const SearchForm = () => {
           Generation
         </label>
         <select
+          {...fieldGeneration}
           id="generation"
           className="bg-[#1F2937] capitalize border border-gray-300 text-white text-sm rounded-lg focus:ring-[#3965B4] focus:border-[#3965B4] block w-full p-2.5 "
         >
@@ -35,13 +37,14 @@ const SearchForm = () => {
           Types
         </label>
         <select
+          {...fieldTypes}
           id="types"
           className="bg-[#1F2937] capitalize border border-gray-300 text-white text-sm rounded-lg focus:ring-[#3965B4] focus:border-[#3965B4] block w-full p-2.5 "
         >
           {typesList.map((item, index) => (
             <option
               className="capitalize"
-              key={`types-key-${index}`}
+              key={`type-key-${index}`}
               value={index}
             >
               {item}
@@ -57,6 +60,7 @@ const SearchForm = () => {
           Sort by
         </label>
         <select
+          {...fieldSort}
           id="sort"
           className="bg-[#1F2937] capitalize border border-gray-300 text-white text-sm rounded-lg focus:ring-[#3965B4] focus:border-[#3965B4] block w-full p-2.5 "
         >

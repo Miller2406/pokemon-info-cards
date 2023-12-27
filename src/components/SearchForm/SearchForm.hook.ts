@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { pokemonListServices, pokemonDetailServices } from "@/service";
 import { usePokemonListStore } from "@/store/pokemonList";
 import { useForm } from "react-hook-form";
+import { generationList } from "@/utils/optionList";
+import { IPokemonDetailRespose } from "@/interface/pokemonDetail";
 
 const useSearchForm = () => {
   const {
@@ -13,14 +15,24 @@ const useSearchForm = () => {
   const { setFetchPokemonList, fetchPokemon, setPokemonList } =
     usePokemonListStore();
   const keyword = watch("keyword");
+  const generation = watch("generation");
+  const types = watch("types");
+  const sort = watch("sort");
 
-  const callData = async () => {
-    const responseList = await pokemonListServices.getPokemonList();
+  const callData = async (filter: {
+    name: string;
+    limit: number;
+    offset: number;
+  }) => {
+    setFetchPokemonList({ data: [], loading: true, error: null });
+    const responseList = await pokemonListServices.getPokemonList(
+      filter.limit,
+      filter.offset
+    );
     const pokeList = [];
 
     if (responseList.status === 200) {
       const responseResults = responseList.data?.results || [];
-      setFetchPokemonList({ data: [], loading: true, error: null });
       for (const pokemon of responseResults) {
         const response = await pokemonDetailServices.getPokemonDetail(
           pokemon.name
@@ -45,23 +57,58 @@ const useSearchForm = () => {
     }
   };
 
-  useEffect(() => {
-    callData();
-  }, []);
-
-  useEffect(() => {
-    const data = fetchPokemon.data.filter((item) =>
+  const filterPokemon = (
+    keyword: string,
+    types: string,
+    sort: "id" | "name"
+  ) => {
+    const keywordFilter = fetchPokemon.data.filter((item) =>
       item.name.toLowerCase().includes(keyword?.toLowerCase())
     );
+    const typesFilter =
+      types !== "all types"
+        ? keywordFilter.filter((item) =>
+            item.types.find((f) =>
+              f.type.name.toLowerCase().includes(types.toLowerCase())
+            )
+          )
+        : keywordFilter;
+    return sortBy(typesFilter, sort);
+  };
+
+  const sortBy = (data: IPokemonDetailRespose[], sort: "id" | "name") => {
+    switch (sort) {
+      case "id":
+        return data.sort((a, b) => a.id - b.id);
+      case "name":
+        return data.sort((a, b) =>
+          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        );
+      default:
+        return data.sort((a, b) => a.id - b.id);
+    }
+  };
+
+  useEffect(() => {
+    if (generation !== undefined) {
+      callData(generationList[generation]);
+    }
+  }, [generation]);
+
+  useEffect(() => {
+    const data = filterPokemon(keyword, types, sort);
     setPokemonList({
       data: data,
       loading: false,
       error: null,
     });
-  }, [keyword]);
+  }, [keyword, types, sort]);
 
   return {
     fieldKeyword: register("keyword"),
+    fieldGeneration: register("generation"),
+    fieldTypes: register("types"),
+    fieldSort: register("sort"),
   };
 };
 
