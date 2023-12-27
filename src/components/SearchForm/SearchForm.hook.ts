@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { pokemonListServices, pokemonDetailServices } from "@/service";
 import { usePokemonListStore } from "@/store/pokemonList";
 import { useForm } from "react-hook-form";
-import { generationList } from "@/utils/optionList";
+import { generationList, sortList, typesList } from "@/utils/optionList";
 import { IPokemonDetailRespose } from "@/interface/pokemonDetail";
 
 const useSearchForm = () => {
@@ -47,7 +47,8 @@ const useSearchForm = () => {
           });
       }
       setFetchPokemonList({ data: pokeList, loading: false, error: null });
-      setPokemonList({ data: pokeList, loading: false, error: null });
+      const data = filterPokemon(pokeList, keyword, types, sort);
+      setPokemonList({ data: data, loading: false, error: null });
     } else {
       setFetchPokemonList({
         data: [],
@@ -58,25 +59,26 @@ const useSearchForm = () => {
   };
 
   const filterPokemon = (
+    fetchPokemon: IPokemonDetailRespose[],
     keyword: string,
-    types: string,
-    sort: "id" | "name"
+    types: number,
+    sort: number
   ) => {
-    const keywordFilter = fetchPokemon.data.filter((item) =>
+    const keywordFilter = fetchPokemon.filter((item) =>
       item.name.toLowerCase().includes(keyword?.toLowerCase())
     );
     const typesFilter =
-      types !== "all types"
+      typesList[types] !== "all types"
         ? keywordFilter.filter((item) =>
             item.types.find((f) =>
-              f.type.name.toLowerCase().includes(types.toLowerCase())
+              f.type.name.toLowerCase().includes(typesList[types].toLowerCase())
             )
           )
         : keywordFilter;
-    return sortBy(typesFilter, sort);
+    return sortBy(typesFilter, sortList[sort]);
   };
 
-  const sortBy = (data: IPokemonDetailRespose[], sort: "id" | "name") => {
+  const sortBy = (data: IPokemonDetailRespose[], sort: string) => {
     switch (sort) {
       case "id":
         return data.sort((a, b) => a.id - b.id);
@@ -96,7 +98,7 @@ const useSearchForm = () => {
   }, [generation]);
 
   useEffect(() => {
-    const data = filterPokemon(keyword, types, sort);
+    const data = filterPokemon(fetchPokemon.data, keyword, types, sort);
     setPokemonList({
       data: data,
       loading: false,

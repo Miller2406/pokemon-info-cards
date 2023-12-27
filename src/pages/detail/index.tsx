@@ -101,9 +101,10 @@ const DetailPage = () => {
                 </div>
 
                 <div className="text-end mt-1 capitalize">
-                  {pokemon.data.types.map((item) => {
+                  {pokemon.data.types.map((item, index) => {
                     return (
                       <span
+                        key={index}
                         className={` badge-type-${item.type.name} ml-2 px-2 py-0.5 text-sm rounded-lg text-black`}
                       >
                         {item.type.name}
@@ -113,9 +114,10 @@ const DetailPage = () => {
                 </div>
                 <div className="mt-[20px] font-semibold bg-[#284d935b] rounded-xl px-2 pt-1 pb-4 ">
                   <h5>Abilities</h5>
-                  {pokemon.data.abilities.map((item) => {
+                  {pokemon.data.abilities.map((item, index) => {
                     return (
                       <div
+                        key={index}
                         className={`capitalize bg-[#4caeeb75] rounded-2xl mt-1 mx-4 font-normal text-center`}
                       >
                         {item.ability.name}
@@ -125,9 +127,12 @@ const DetailPage = () => {
                 </div>
                 <div className="mt-[20px] font-semibold bg-[#284d935b] rounded-lg px-2 pt-1 pb-4 ">
                   <h5>Stats</h5>
-                  {pokemon.data.stats.map((item) => {
+                  {pokemon.data.stats.map((item, index) => {
                     return (
-                      <div className="flex justify-between ml-1 mr-0.5">
+                      <div
+                        key={index}
+                        className="flex justify-between ml-1 mr-0.5"
+                      >
                         <div className="flex gap-x-[10px] capitalize font-light justify-between ">
                           <div>{item.stat.name}</div>
                         </div>

@@ -27,6 +27,7 @@ const HomePage = () => {
           {pokemon.data.map((item) => {
             return (
               <PokemonCard
+                key={item.id}
                 image={item.image}
                 name={item.name}
                 id={item.id}
