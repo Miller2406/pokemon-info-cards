@@ -10,7 +10,7 @@ const HomePage = () => {
     <div className=" w-[90%] m-[auto] max-w-[1100px]">
       <div className="flex justify-center ">
         <img
-          src="public\images\logo.webp"
+          src="/images/logo.webp"
           alt="pokedek-logo"
           className="max-h-[80px] mt-[20px] "
         />

@@ -8,9 +8,8 @@ import { IPokemonDetailRespose } from "@/interface/pokemonDetail";
 const useSearchForm = () => {
   const {
     register,
-    handleSubmit,
     watch,
-    formState: { errors },
+    formState: {},
   } = useForm();
   const { setFetchPokemonList, fetchPokemon, setPokemonList } =
     usePokemonListStore();

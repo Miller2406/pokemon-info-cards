@@ -1,8 +1,7 @@
-import PokemonCard from "@/PokemonCard";
 import { IPokemonDetailRespose } from "@/interface/pokemonDetail";
-import { pokemonDetailServices, pokemonListServices } from "@/service";
-import React, { useEffect, useState } from "react";
-import { Routes, Route, useParams, Link } from "react-router-dom";
+import { pokemonDetailServices } from "@/service";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
 type pokemonType = {
   data: IPokemonDetailRespose | undefined;
@@ -50,7 +49,7 @@ const DetailPage = () => {
     <div className=" w-[90%] m-[auto] max-w-[1100px]">
       <div className="flex justify-center ">
         <img
-          src="/public\images\logo.webp"
+          src="/images/logo.webp"
           alt="pokedek-logo"
           className="max-h-[80px] mt-[20px] "
         />
